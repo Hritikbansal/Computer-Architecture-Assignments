@@ -24,11 +24,11 @@
 	add sp,sp,4 
 	@WE HAVE THE INDEX OF PIVOT HERE  
 	
-	sub r4,r4,4
+	sub r4,r6,4
 	ld r2,4[sp]
 	call .quicksort
 	
-        add r2,r4,8
+        add r2,r6,4
 	ld r4,8[sp]
 	call .quicksort
 	ld ra,[sp]
@@ -71,8 +71,7 @@
 	b .beforecontinue	
 
  .main:
-
-	@ Loading the values as an array into the registers
+@ Loading the values as an array into the registers
 	mov r0, 0    
 	mov r1, 12	@ replace 12 with the number to be sorted
 	st r1, 0[r0]
@@ -116,4 +115,3 @@
 	ld r1, 20[r0]
 	.print r1
 	@ EXTEND ON SIMILAR LINES FOR MORE NUMBERS
-
