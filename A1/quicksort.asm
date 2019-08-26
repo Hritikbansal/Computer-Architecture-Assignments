@@ -13,7 +13,7 @@
 	st r2,4[sp]
 	st r4,8[sp]
 	
-	mov r5,[r4] @storing the pivot in r5
+	ld r5,[r4] @storing the pivot in r5
 	sub r6,r2,4 @acts as index i
 	mov r7,r2   @acts as index j
 	
@@ -24,9 +24,20 @@
 	add sp,sp,4 
 	@WE HAVE THE INDEX OF PIVOT HERE  
 	
+	sub r4,r6,4
+	ld r2,4[sp]
+	call .quicksort
+	
+        add r2,r6,4
+	ld r4,8[sp]
+	call .quicksort
+	ld ra,[sp]
+	add sp,sp,12
+	ret
+
 .continue:
 	cmp r4,r7  @till j is less than higher index
-	bgt .comparewithpivot
+	bgt .comparepivot
 	beq .positionpivot
 
 .positionpivot:
@@ -38,7 +49,7 @@
 	b .return @return to statement X
 	
 .comparepivot:
-	mov r9,[r7] @acts as arr[j]	
+	ld r9,[r7] @acts as arr[j]	
 	cmp r5,r9  @comparison btw pivot and arr[j]
 	bgt .swap
 	@if arr[j] is greater than pivot-do nothing
@@ -60,21 +71,21 @@
 	b .beforecontinue	
 
  .main:
-
-	@ Loading the values as an array into the registers
+@ Loading the values as an array into the registers
 	mov r0, 0    
 	mov r1, 12	@ replace 12 with the number to be sorted
 	st r1, 0[r0]
 	mov r1, 7	@ replace 7 with the number to be sorted
 	st r1, 4[r0]
-	mov r1, 11  @ replace 11 with the number to be sorted
+	mov r1, 11  	@ replace 11 with the number to be sorted
 	st r1, 8[r0]
-	mov r1, 9   @ replace 9 with the number to be sorted
+	mov r1, 9   	@ replace 9 with the number to be sorted
 	st r1, 12[r0]
-	mov r1, 3   @ replace 3 with the number to be sorted
+	mov r1, 3   	@ replace 3 with the number to be sorted
 	st r1, 16[r0]
-	mov r1, 15  @ replace 15 with the number to be sorted
+	mov r1, 15  	@ replace 15 with the number to be sorted
 	st r1, 20[r0]
+	
 	@ EXTEND ON SIMILAR LINES FOR MORE NUMBERS
 
 	mov r2, 0          @ Starting address of the array
@@ -83,7 +94,6 @@
 	mov r3, 5	@ REPLACE 5 WITH N-1, where, N is the number of numbers being sorted
 	mul r3, r3, 4		
 	add r4, r2, r3	@r4 contains the end address of the array
- 	
 	
  	@ ADD YOUR CODE HERE 
 
@@ -105,4 +115,3 @@
 	ld r1, 20[r0]
 	.print r1
 	@ EXTEND ON SIMILAR LINES FOR MORE NUMBERS
-
