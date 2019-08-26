@@ -1,5 +1,63 @@
 .quicksort:
 		@ ADD YOUR CODE HERE
+		cmp r4,r2 @if r4 is greater than r2
+		bgt .partition
+		beq .return
+.return:	
+	ret
+
+.partition:
+
+	sub sp,sp,12
+	st ra,[sp]
+	st r2,4[sp]
+	st r4,8[sp]
+	
+	mov r5,[r4] @storing the pivot in r5
+	sub r6,r2,4 @acts as index i
+	mov r7,r2   @acts as index j
+	
+	sub sp,sp,4
+	st ra,[sp]
+	call .continue @statement X
+	ld ra,[sp]  
+	add sp,sp,4 
+	@WE HAVE THE INDEX OF PIVOT HERE  
+	
+.continue:
+	cmp r4,r7  @till j is less than higher index
+	bgt .comparewithpivot
+	beq .positionpivot
+
+.positionpivot:
+	add r6,r6,4 @i+1
+	@swap i+1 with high(r4)
+	ld r10,[r6]
+	st r5,[r6]
+	st r10,[r4] 
+	b .return @return to statement X
+	
+.comparepivot:
+	mov r9,[r7] @acts as arr[j]	
+	cmp r5,r9  @comparison btw pivot and arr[j]
+	bgt .swap
+	@if arr[j] is greater than pivot-do nothing
+	add r7,r7,4
+	b .continue
+	
+
+.beforecontinue:
+	add r7,r7,4 @increase j by 1 index
+	b .continue
+.swap:
+	add r6,r6,4
+	cmp r6,r7
+	beq .beforecontinue
+	@Swap r6 and r7 if index i and j are not same
+	ld r10,[r6] @temp variable r10
+	st r9,[r6]
+	st r10,[r7]
+	b .beforecontinue	
 
  .main:
 
@@ -24,8 +82,8 @@
 	@ Retreive the end address of the array
 	mov r3, 5	@ REPLACE 5 WITH N-1, where, N is the number of numbers being sorted
 	mul r3, r3, 4		
-	add r4, r2, r3
-	
+	add r4, r2, r3	@r4 contains the end address of the array
+ 	
 	
  	@ ADD YOUR CODE HERE 
 
