@@ -28,7 +28,7 @@
 	ld r2,4[sp]
 	call .quicksort
 	
-        add r2,r6,4
+    add r2,r6,4
 	ld r4,8[sp]
 	call .quicksort
 	ld ra,[sp]
