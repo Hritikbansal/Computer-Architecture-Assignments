@@ -1463,6 +1463,7 @@ void executeInstruction(void)
 		default: invalidInst();
 			  	  break;
 	}
+	printf(": %#010x\n",encodedInst);
 }
 
 
